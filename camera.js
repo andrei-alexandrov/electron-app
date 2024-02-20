@@ -16,9 +16,8 @@ captureButoon.addEventListener("click", () => {
   // converting to a usable data URL
   const dataURL = canvas.toDataURL();
   console.log(dataURL);
-  imageTag.src = dataURL;
+  window.electronAPI.sendImage(dataURL);
 });
-
 
 navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
   console.log(stream);

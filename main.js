@@ -1,4 +1,4 @@
-const { app, shell, BrowserWindow, Menu } = require("electron");
+const { app, shell, BrowserWindow, Menu, ipcMain } = require("electron");
 const path = require("node:path");
 const isMac = process.platform === "darwin";
 
@@ -82,7 +82,16 @@ const menuItems = [
           const cameraWindow = new BrowserWindow({
             width: 800,
             height: 600,
+            show: false,
+            webPreferences: {
+              preload: path.join(__dirname, "cameraPreload.js"),
+            },
           });
+
+          ipcMain.on("close-window-2", () => {
+            cameraWindow.close();
+          });
+
           cameraWindow.webContents.openDevTools();
           cameraWindow.loadFile("camera.html");
           cameraWindow.once("ready-to-show", () => {
@@ -106,11 +115,18 @@ const createWindow = () => {
       preload: path.join(__dirname, "preload.js"),
     },
   });
+
+  ipcMain.on("set-image", (event, data) => {
+    window.webContents.send("get-image", data);
+  });
+
+  window.webContents.openDevTools();
   window.loadFile("index.html");
 };
 
 app.whenReady().then(() => {
   createWindow();
+
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
