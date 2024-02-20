@@ -17,6 +17,9 @@ captureButoon.addEventListener("click", () => {
   const dataURL = canvas.toDataURL();
   console.log(dataURL);
   window.electronAPI.sendImage(dataURL);
+  new Notification("Image captured", {
+    body: "Image is successfully captured from the live video.",
+  });
 });
 
 navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
