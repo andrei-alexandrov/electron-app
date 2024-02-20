@@ -8,7 +8,7 @@ const menuItems = [
     label: "File",
     submenu: [
       {
-        label: "Learn more",
+        label: "My Portfolio",
         click: async () => {
           await shell.openExternal(
             "https://andrei-alexandrov-portfolio.netlify.app/"
@@ -32,6 +32,14 @@ const menuItems = [
     submenu: [
       {
         label: "About",
+        click: () => {
+          const aboutWindow = new BrowserWindow({
+            width: 600,
+            height: 400,
+            movable: false,
+          });
+          aboutWindow.loadFile("indexTwo.html");
+        },
       },
     ],
   },
@@ -39,10 +47,48 @@ const menuItems = [
     label: "Window",
     submenu: [
       {
-        role: "close",
+        label: "New Window",
+        click: () => {
+          const newWindow = new BrowserWindow({
+            width: 1200,
+            height: 1000,
+            show: false,
+            backgroundColor: "gray",
+          });
+
+          newWindow.loadURL(
+            "https://imdb-next-js-andrei-alexandrov.vercel.app/"
+          );
+          //Shows the content only when fully loaded
+          newWindow.once("ready-to-show", () => {
+            newWindow.show();
+          });
+        },
       },
       {
         role: "minimize",
+      },
+      {
+        role: "close",
+      },
+    ],
+  },
+  {
+    label: "Camera",
+    submenu: [
+      {
+        label: "Open Camera",
+        click: () => {
+          const cameraWindow = new BrowserWindow({
+            width: 800,
+            height: 600,
+          });
+          cameraWindow.webContents.openDevTools();
+          cameraWindow.loadFile("camera.html");
+          cameraWindow.once("ready-to-show", () => {
+            cameraWindow.show();
+          });
+        },
       },
     ],
   },
