@@ -14,6 +14,6 @@ window.addEventListener("DOMContentLoaded", () => {
 const { contextBridge, ipcRenderer } = require("electron/renderer");
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  getImage: (callback) => ipcRenderer.on("get-title", callback),
+  getImage: (callback) => ipcRenderer.on("get-image", callback),
   closeWindow2: () => ipcRenderer.send("close-window-2")
 });

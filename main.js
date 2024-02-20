@@ -92,7 +92,7 @@ const menuItems = [
             cameraWindow.close();
           });
 
-          cameraWindow.webContents.openDevTools();
+          // cameraWindow.webContents.openDevTools();
           cameraWindow.loadFile("camera.html");
           cameraWindow.once("ready-to-show", () => {
             cameraWindow.show();
@@ -120,7 +120,7 @@ const createWindow = () => {
     window.webContents.send("get-image", data);
   });
 
-  window.webContents.openDevTools();
+  // window.webContents.openDevTools();
   window.loadFile("index.html");
 };
 
